@@ -1,4 +1,44 @@
-input 
-{
-    color: red;
+div{
+    background-color: green !important ; /*cannot be overriden*/
+    height: 10%; /*percentage height of its parent*/ /*grab parent's height and I am 10% of that*/
+    width: 1em;/* 1em =16px*/ /*measurement relative to font; good to use because pixels are diffeent on different devices*/
+    border:1px /*unit of measure*/ solid black;
 }
+#id{
+background-color: burlywood;
+}
+.class{
+    background-color: greenyellow;
+}
+
+div.note {
+    background-color: red;
+}
+/*descendant*/
+div p {
+background-color: green;
+}
+/*direct child element*/
+div > p {
+    background-color: plum;
+}
+
+/*pseudo selector - related to an action*/
+table:hover {
+background-color: palevioletred;
+}
+table:active {
+
+}
+input [type="text"]:focus /*text boxes when there is a slight glow to it*/ {
+background-color: blue;
+}
+
+ul:first /*style first element in the unordered list*/ 
+ul:nth /*certain specific elememnt to be styled*/
+ /*attribute
+ element[attr="value"]
+ */
+ div[class="note"] {
+color:yellow;
+ }
