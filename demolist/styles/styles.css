@@ -1,0 +1,25 @@
+.fizz
+{
+border: 10px inset aqua;
+background-color: gold;
+color:black;
+font-weight: bold;
+}
+.buzz
+{
+border: 10px ridge red;
+opacity: 0.75;
+color: navy;
+font-weight: bold;
+background-color: white;
+}
+li:hover {
+font-weight: bold;
+}
+.fizz:hover {
+background-color: aqua;
+}
+
+.buzz:hover {
+background-color: red;
+}

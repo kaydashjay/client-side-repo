@@ -1,0 +1,16 @@
+.myjumbotron {
+    color: lightcyan;
+    background-color: black;
+}
+
+div {
+border: .1em solid black;
+}
+
+div.row {
+    border: 0em;
+}
+
+.halfwidth {
+    width: 50%;
+}
