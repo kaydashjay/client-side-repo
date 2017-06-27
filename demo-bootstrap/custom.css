@@ -14,3 +14,6 @@ div.row {
 .halfwidth {
     width: 50%;
 }
+body {
+    background-color: yellowgreen;
+}
