@@ -1,0 +1,47 @@
+'use strict'; //all variabeles have to be declared
+            // no hoisting
+var c = console;
+var result;
+window.onload=function (){
+    //get buton from the DOM
+
+var addButton = document.getElementById("addBtn");
+var subButton = document.getElementById("subBtn");
+var divideButton = document.getElementById("divBtn");
+var multiplyButton = document.getElementById("multiBtn");
+// var addButton = document.getElementById("addBtn");
+var add= function(num1, num2)
+{
+    result=num1 +num2;
+    c.log(result);
+}
+
+// var subtract = function (num1, num2){
+//     result=num1 -num2;
+//     c.log(result);
+// }
+
+//add click event to button
+//textbox.addEventListener("keypress", clog);
+addButton.addEventListener("click",function () 
+{
+    var textbox1 = document.getElementById("textbox1");
+    var textbox2 = document.getElementById("textbox2");
+    var num1=parseInt(textbox1.value);
+    var num2=parseInt(textbox2.value);
+    add (num1, num2);
+});
+
+/*btnelem.addEventListener("click", function (event)
+{
+    var numElem = document.getElementById("num");
+    var value=numElem.value;
+    c.log(value);
+    c.log(typeof value);
+    var num = parseInt (value);
+    c.log(num);
+    c.log(typeof num)
+})*/
+
+
+};
