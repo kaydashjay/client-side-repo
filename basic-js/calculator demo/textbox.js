@@ -20,6 +20,14 @@ var subtract = function (num1, num2){
     result=num1 -num2;
     c.log(result);
 }
+var divide = function (num1, num2){
+    result=num1/num2;
+    c.log(result);
+}
+// var multiply = function (num1, num2){
+//     result=num1 * num2;
+//     c.log(result);
+// }
 
 //add click event to button
 //textbox.addEventListener("keypress", clog);
