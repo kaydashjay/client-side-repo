@@ -9,28 +9,27 @@ var addButton = document.getElementById("addBtn");
 var subButton = document.getElementById("subBtn");
 var divideButton = document.getElementById("divBtn");
 var multiplyButton = document.getElementById("multiBtn");
-// var addButton = document.getElementById("addBtn");
+var resultDiv = document.getElementById("result");
 var add= function(num1, num2)
 {
     result=num1 +num2;
-    c.log(result);
+    resultDiv.innerText=result;
 }
 
 var subtract = function (num1, num2){
     result=num1 -num2;
-    c.log(result);
+    resultDiv.innerText=result;
 }
 var divide = function (num1, num2){
     result=num1/num2;
-    c.log(result);
+    resultDiv.innerText=result;
 }
 var multiply = function (num1, num2){
     result=num1 * num2;
-    c.log(result);
+    resultDiv.innerText=result;
 }
 
 //add click event to button
-//textbox.addEventListener("keypress", clog);
 addButton.addEventListener("click",function () 
 {
     var textbox1 = document.getElementById("textbox1");
