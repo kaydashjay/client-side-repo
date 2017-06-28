@@ -16,10 +16,10 @@ var add= function(num1, num2)
     c.log(result);
 }
 
-// var subtract = function (num1, num2){
-//     result=num1 -num2;
-//     c.log(result);
-// }
+var subtract = function (num1, num2){
+    result=num1 -num2;
+    c.log(result);
+}
 
 //add click event to button
 //textbox.addEventListener("keypress", clog);
@@ -30,6 +30,33 @@ addButton.addEventListener("click",function ()
     var num1=parseInt(textbox1.value);
     var num2=parseInt(textbox2.value);
     add (num1, num2);
+});
+
+subButton.addEventListener("click",function () 
+{
+    var textbox1 = document.getElementById("textbox1");
+    var textbox2 = document.getElementById("textbox2");
+    var num1=parseInt(textbox1.value);
+    var num2=parseInt(textbox2.value);
+    subtract (num1, num2);
+});
+
+divideButton.addEventListener("click",function () 
+{
+    var textbox1 = document.getElementById("textbox1");
+    var textbox2 = document.getElementById("textbox2");
+    var num1=parseInt(textbox1.value);
+    var num2=parseInt(textbox2.value);
+    divide (num1, num2);
+});
+
+multiplyButton.addEventListener("click",function () 
+{
+    var textbox1 = document.getElementById("textbox1");
+    var textbox2 = document.getElementById("textbox2");
+    var num1=parseInt(textbox1.value);
+    var num2=parseInt(textbox2.value);
+    multiply (num1, num2);
 });
 
 /*btnelem.addEventListener("click", function (event)
