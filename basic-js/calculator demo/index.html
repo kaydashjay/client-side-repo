@@ -1,22 +1,50 @@
 <html>
-<body>
-    <head>
-        <!--<link rel="stylesheet" href="bootstrap/css/bootstrap.css">-->
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css">
-    </head>
-    <div>
-        <div>
-        <input id="textbox1" type="text" placeholder="enter text" required>
-         <input class="input" id="textbox2" type="text"placeholder="enter text"  required>
-
-        <button class="btn btn-primary" id="addBtn">+</button>
-        <button class="btn btn-primary" id="subBtn">-</button>
-        <button class ="btn btn-primary" id="divBtn">/</button>
-        <button class ="btn btn-primary" id="multiBtn">x</button>
+    <body>
+        <head>
+            <!--<link rel="stylesheet" href="bootstrap/css/bootstrap.css">-->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css">
+                <link rel="stylesheet" href="styles.css">
+        </head>
+        <div class="container center">
+            <!--<div class="row well">
+                <input id="textbox1" type="text" placeholder="enter text" required>
+            <input class="" id="textbox2" type="text"placeholder="enter text"  required>'
+            </div>-->
+            <div class=" well col-xs-4 col-xs-offset-4">
+            <div id = "keypad" >
+                <input id="resultBox" class="btn btn-default col-xs-12" type="text" disabled="disabled">
+                </br></br>
+                    <div class="row">
+                        <button class="btn btn-primary col-xs-3 col-xs-offset-6" id="clearBtn">C</button>
+                        <button class="btn btn-primary col-xs-3" id="divBtn">/</button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-primary col-xs-3 " id="7">7</button>
+                        <button class="btn btn-primary col-xs-3 " id="8">8</button>
+                        <button class ="btn btn-primary col-xs-3 " id="9">9</button>
+                        <button class ="btn btn-primary col-xs-3 " id="multiBtn">x</button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-primary col-xs-3 " id="4">4</button>
+                        <button class="btn btn-primary col-xs-3 " id="5">5</button>
+                        <button class ="btn btn-primary col-xs-3 " id="6">6</button>
+                        <button class ="btn btn-primary col-xs-3 " id="subBtn">-</button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-primary col-xs-3 " id="1">1</button>
+                        <button class="btn btn-primary col-xs-3 " id="2">2</button>
+                        <button class ="btn btn-primary col-xs-3 " id="3">3</button>
+                        <button class ="btn btn-primary col-xs-3 " id="addBtn">+</button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-primary col-xs-3 col-xs-offset-3" id="0">0</button>
+                        <button class ="btn btn-primary col-xs-3 " id="decimal">.</button>
+                        <button class ="btn btn-primary col-xs-3 " id="eqBtn">=</button>
+                    </div>
+                    </div>
+                </div>
         </div>
-    <div id="result">
-
-    </div>
-    <script type="text/javascript" src="textbox.js"></script>
-</body>
+        </div>
+        <script type="text/javascript" src="textbox.js"></script>
+    </body>
 </html>
