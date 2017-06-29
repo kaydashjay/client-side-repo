@@ -7,8 +7,6 @@
     
     function runCallback (cb){
        
-             function (x) {c.log(x)};
-        
         cb("test");
     }
 
