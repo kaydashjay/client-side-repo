@@ -20,7 +20,7 @@ var clearButton = document.getElementById("clearBtn");
 var resultBox = document.getElementById("resultBox");
 var keypad = document.getElementById("keypad");
  
-
+//calculation functions
 var add= function(num1, num2)
 {
     resultBox.value=num1 +num2;
@@ -50,31 +50,41 @@ var multiply = function (num1, num2)
 //add click event to entire keypad of buttons
 keypad.addEventListener("click",function (event) 
 {
+    //checks if the the clear button was clicked
 if (event.target.innerText=="C")
 {
-    resultBox.value="";
+    resultBox.value="";//emptys the textbox
+
+    //incase operator is disable forever unless you refresh
+    subButton.disabled=false;
+    addButton.disabled=false;
+    divideButton.disabled=false;    
+    multiplyButton.disabled=false;
 }
 else
 {
- resultBox.value+=event.target.innerHTML;
+    //otherwise allow you to enter your number and let it be seen in the textbox
+ resultBox.value+=event.target.innerHTML; 
   
   if (event.target.innerText=="x" ||event.target.innerText=="+" ||
-  event.target.innerText=="-" ||event.target.innerText=="/")
-  {
-      op=event.target.innerText;
-      n1 = parseInt(resultBox.value);
-    resultBox.value="";
+  event.target.innerText=="-" ||event.target.innerText=="/") //if any of the operators are clicked,
+  //stop entering the first number
+  {  
+      op=event.target.innerText; //save operater in a variable
+      n1 = parseInt(resultBox.value); //save the first number in a variable
+    resultBox.value="";//clear textbox to enter second number
         
   }
+  //second numer is entered until "=" is clicked
     if (event.target.innerText=="=")
         {
+            //if the first number is entered
             if (n1)
             {
-        //resultBox.value+=event.target.innerHTML;
-            n2=parseInt(resultBox.value);
-            resultBox.value="";
+            n2=parseInt(resultBox.value);// save the second number in  variable n2
+            resultBox.value=""; //empty the textbox for the result
             
-
+// switch to determine which operator was used and do the appropriate operation
             switch (op){
                 case "x":
                     multiply (n1, n2);
