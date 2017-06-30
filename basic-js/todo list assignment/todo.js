@@ -4,6 +4,28 @@ var c=console;
 var d= document;
 
 window.onload = function(){
+//     $('.inputbox').keypress(function(e) {
+//     if(e.which == 13) {
+//     	var itemtext = $.trim($(this).val());
+//     	$(this).val('');
+//         if (!itemtext || itemtext.length == 0)
+//         {
+//         	// do nothing
+// 	        // alert('empty string');
+//         }
+//         else
+//         {
+//         	addItemToList(itemtext, '#activelist', 'activeitem','box', '-');
+//         	addCheckBoxEvent();
+//         	// addButtonEventDeleteTask();
+//         	// var newitem = '<li><div class="listitem"><div class="activeitem"><input class="'+'box'+'" type="checkbox"><span class="item">' + itemvalue + '</span><button class="itembtn">-</button></div></div></li>';
+//         	// $('.activelist').append(newitem);
+//         	// addCheckBoxEvent();
+//         	// addButtonEvent();
+//         	// alert(itemvalue.length);
+//         }
+//     }
+// });
     //get elements
     var textBox = d.getElementById("textbox");
     var addButton = d.getElementById("add");
@@ -13,6 +35,19 @@ window.onload = function(){
     var main = d.getElementById("main");        
 
     //event handling for the Add button
+    textbox.addEventListener("keypress", function(event){
+        if(event.which == 13) {
+            if(textbox.value.trim()!="")
+        {
+            addItemTodo(textbox.value.trim());
+            textbox.value="";
+        }
+        else
+        {
+            alert("Please enter a todo item");
+        }
+        }
+    });
     addButton.addEventListener("click",function(){
         if(textbox.value.trim()!="")
         {
