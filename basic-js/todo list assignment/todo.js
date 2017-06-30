@@ -10,18 +10,14 @@ window.onload = function(){
     var todolist = d.getElementById("todo-ul");    
     var completedList = d.getElementById("completed-ul");    
     var deletedlist = d.getElementById("deleted");
-    var main = d.getElementById("main");
+    var main = d.getElementById("main");        
 
-    //create new list item, its checkbox, and its delete button
-        
-
-   
-
-    //event handling
+    //event handling for the Add button
     addButton.addEventListener("click",function(){
         if(textbox.value.trim()!="")
         {
-            addItemTodo(textbox.value);
+            addItemTodo(textbox.value.trim());
+            textbox.value="";
         }
         else
         {
@@ -29,67 +25,75 @@ window.onload = function(){
         }
     }); 
 
-    
-    
-
  //creates new item in todo list
     function addItemTodo (item){
     var value=d.createTextNode(item);
      var li = d.createElement("li");
-         var checkbox = d.createElement("input");
-              var deleteButton = d.createElement("button");
+     li.className="row";
 
-     checkbox.addEventListener("change", function(){
+    var checkbox = d.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.style="margin: 5px;";
+
+
+    //event handling for checkbox of each newly added item
+    checkbox.addEventListener("change", function(){
         if (this.checked){
             event.currentTarget.parentElement.remove();
             addItemCompleted(li.innerText);
 
         }
-     
     });
-     deleteButton.addEventListener("click",function (event){
+
+    var deleteButton = d.createElement("input");
+    deleteButton.type="button";
+    deleteButton.value="Delete";
+    deleteButton.className="btn btn-danger";
+    deleteButton.style="margin: 5px;";
+    //event handling for delete button of each newly added item
+    deleteButton.addEventListener("click",function (event){
         event.currentTarget.parentElement.remove();
-        
      });
 
-     deleteButton.innerText="-"
-    checkbox.type = "checkbox";
-    li.appendChild(checkbox);
+    li.appendChild(checkbox); //appends checkbox to li
+     li.appendChild(value); //appends the text to li
+     li.appendChild(deleteButton); //appends the delete button to li
+    todolist.appendChild(li); // appends li to the todo list ul
+}
 
-     li.appendChild(value);
-     li.appendChild(deleteButton);
-        todolist.appendChild(li);
-        textbox.value="";
-    }
 //////////////---------Add Item to Commpleted List---------------///////
     function addItemCompleted (item){
     var value=d.createTextNode(item);
      var li = d.createElement("li");
-         var checkbox = d.createElement("input");
-              var deleteButton = d.createElement("button");
+    var strikethrough = d.createElement("s");
 
-     checkbox.addEventListener("change", function(){
-        if (!this.checked){
-            event.currentTarget.parentElement.remove();
-
-            addItemTodo(li.innerText);
-        }
-     
-    });
-     deleteButton.addEventListener("click",function (event){
-        event.currentTarget.parentElement.remove();
-        
-     });
-
-     deleteButton.innerText="-"
+    var checkbox = d.createElement("input");
     checkbox.type = "checkbox";
     checkbox.checked=true;
-    li.appendChild(checkbox);
+    checkbox.style="margin: 5px;";
 
-     li.appendChild(value);
-     li.appendChild(deleteButton);
-        completedList.appendChild(li);
-        textbox.value="";
-    }
+    checkbox.addEventListener("change", function(){
+        if (!this.checked){
+        event.currentTarget.parentElement.remove();
+        addItemTodo(li.innerText);
+        }
+  });
+
+    var deleteButton = d.createElement("input");
+    deleteButton.type="button";
+    deleteButton.value="Delete";
+    deleteButton.className="btn btn-danger";
+    deleteButton.style="margin: 5px;";
+    deleteButton.addEventListener("click",function (event){
+        event.currentTarget.parentElement.remove();   
+     });
+
+    
+    li.appendChild(checkbox);
+    li.appendChild(strikethrough);
+    strikethrough.appendChild(value);
+    li.appendChild(deleteButton);
+    completedList.appendChild(li);    
+}
 
 }
