@@ -31,7 +31,6 @@ window.onload = function(){
     var addButton = d.getElementById("add");
     var todolist = d.getElementById("todo-ul");    
     var completedList = d.getElementById("completed-ul");    
-    var deletedlist = d.getElementById("deleted");
     var main = d.getElementById("main");        
 
     //event handling for the Add button
@@ -87,7 +86,9 @@ window.onload = function(){
     deleteButton.style="margin: 5px;";
     //event handling for delete button of each newly added item
     deleteButton.addEventListener("click",function (event){
-        event.currentTarget.parentElement.remove();
+        var container = li.parentNode;
+        container.removeChild(li);
+        //OR event.currentTarget.parentElement.remove();
      });
 
     li.appendChild(checkbox); //appends checkbox to li
@@ -120,7 +121,9 @@ window.onload = function(){
     deleteButton.className="btn btn-danger";
     deleteButton.style="margin: 5px;";
     deleteButton.addEventListener("click",function (event){
-        event.currentTarget.parentElement.remove();   
+        var container = li.parentNode;
+        container.removeChild(li);
+        //OR event.currentTarget.parentElement.remove();   
      });
 
     
