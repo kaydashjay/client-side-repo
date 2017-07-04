@@ -6,8 +6,9 @@
 <body>
     <div class="container-fluid main">
         <div class="row">
-            <div id="menu"class="well col-md-6">
+            <div id="menu"class="well col-md-6" style = "height:100%; overflow-y: auto;">
                 <h3 class="text-center">Menu</h3>
+                <h5 class="text-left">Appetizers</h5>
                 <ul id="apps" class="list-group">
                     
                 </ul>
@@ -30,7 +31,7 @@
                     <p id="msg"class="text-center">Cart empty</p>
                 </ul>
                 <div class="text-right" style= "border-top: 3px solid black" id="totalDiv">
-                   <p style="font-size: 12pt; display: inline-block;">Total:</p> <b><p class="text-right" style = "display:inline-block;"id="total"></p></b>
+                   <p style="font-size: 12pt; display: inline-block;">Total: <b><span class="text-right" id="total"></span></b></p>
                 </div>
                 <div class="text-right">
                     <button id="checkout" class="btn btn-primary"disabled> Checkout</button>

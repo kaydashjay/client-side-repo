@@ -87,8 +87,6 @@ window.cart = (function(){
         for (var i = 0; i<cart.length; i++){
             total += (cart[i]["price"] * cart[i]["quantity"]);
         }
-        c.log(total);
-        c.log(cart);
         return total;
         
     }
