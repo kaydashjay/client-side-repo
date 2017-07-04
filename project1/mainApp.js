@@ -1,12 +1,13 @@
 "use strict";
 var c= console;
 var d = document;
-(window.main = function(Menu, Cart){
+(window.main = function(User, Menu, Cart){
     c.log("mainmodule running");
 
     window.onload = function (){
         var menu = d.getElementById("menu");
         var cart=d.getElementById("cart");
+        var userinfo=d.getElementById("userinfo");
         var apps = d.getElementById("apps");
         var salads = d.getElementById("salads");
         var chicken = d.getElementById("chicken");
@@ -40,34 +41,11 @@ var d = document;
             }
             
       });
-
-      
-                    //    cart.appendChild(createCartLi(name, price, quantity));
-
-        // Cart.getItem(function (data){
-           
-        //   c.log(data);
-        // //    var name = data["name"];
-        // //     var price = data["price"];
-        // //     var quantity = data["quantity"];
-
-    //   });
-    // }
-      
-
-    //   Cart.getCart(function (data){
-    //     for (var i = 0; i<data.length; i++){
-    //          var name = data[i]["name"];
-    //         var price = data[i]["price"];
-    //         var quantity = data[i]["quantity"];
-    //             cart.appendChild(createCartLi(name, price, quantity));
-    //     }
-    //   }
-
-    
-    //   );
-     
-    }
+    User.getUser(function (data){
+        var userText = "Welcome "+ data.fname+"! Here is your cart!<br> You shipping address is: <br>"+data["address[streetAddress]"]+"<br>"+data["address[city]"]+", "+data["address[state]"]+" "+data["address[zipcode]"];
+        userinfo.innerHTML=userText;
+    });
+    };
 function createMenuLi(item, cost){
     var checkoutButton = d.getElementById("checkout");
     var food=d.createTextNode(item);
@@ -98,7 +76,7 @@ function createMenuLi(item, cost){
     addButton.className = "btn btn-success";
     addButton.style="float: right;";
 
-    //event handling for checkbox of each newly added item
+    //event handling for add button of each newly added item
     addButton.addEventListener("click", function(){
         if (amount.value == 0){
             alert("Enter amount");
@@ -115,7 +93,7 @@ function createMenuLi(item, cost){
             cart.appendChild(createCartLi(food.nodeValue,price.nodeValue, amount.value ));
             amount.value=0;
            message.style.display = "none";
-        checkoutButton.disabled=false;
+            checkoutButton.disabled=false;
 
            }
           
@@ -123,8 +101,8 @@ function createMenuLi(item, cost){
         }  
     });
      li.appendChild(food); //appends the text to li
-     li.appendChild(addButton); //appends the delete button to li
-     li.appendChild(span); //appends the text to li
+     li.appendChild(addButton); //appends the add button to li
+     li.appendChild(span); //appends the span of price and quantity to li
          
 
    return li;
@@ -161,7 +139,7 @@ function createCartLi(item, cost, quantity){
     deleteButton.innerText="Delete";
     deleteButton.className = "btn btn-danger";
     deleteButton.style="float: right;";
- //event handling for checkbox of each newly added item
+ //event handling for deletebutton of each newly added item
     deleteButton.addEventListener("click", function(event){
         
        Cart.removeItem(event, food.nodeValue);
@@ -179,7 +157,7 @@ function createCartLi(item, cost, quantity){
     updateButton.className = "btn btn-default";
     updateButton.style="float: right; margin-right: 15px;";
 
- //event handling for checkbox of each newly added item
+ //event handling for update button of each newly added item
     updateButton.addEventListener("click", function(event){
        Cart.updateItem(food.nodeValue, amount.value);
        updateButton.className="btn btn-default";
@@ -191,14 +169,14 @@ function createCartLi(item, cost, quantity){
         updateButton.className="btn btn-success";
     })
    
-     li.appendChild(food); //appends the text to li
+     li.appendChild(food); //appends the food name to li
      li.appendChild(deleteButton); //appends the delete button to li
-    li.appendChild(updateButton); //appends the delete button to li
-     li.appendChild(span); //appends the text to li
+    li.appendChild(updateButton); //appends the update button to li
+     li.appendChild(span); //appends the span of price ans quantity of each item to li
          
 
    return li;
 }
 
 
- })( window.menu, window.cart/*making sure this function is aware of it*/ || ({},  jQuery)); //IIFE fu n
+ })( window.User, window.menu, window.cart /*making sure this function is aware of it*/ || ({})); //IIFE fu n

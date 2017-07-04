@@ -2,8 +2,6 @@
 var c= console;
 
 window.cart = (function(){
-    var posturl = "http://jsonplaceholder.typicode.com/posts";
-
     var cart=[];
     
     function getItem(name){

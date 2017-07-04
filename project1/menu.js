@@ -40,10 +40,7 @@ var Items = {"Appetizers":{
     "userId": 3
 }
 };
- var data = '{"name": "mkyong","age": 30,"address": {"streetAddress": "88 8nd Street","city": "New York"},"phoneNumber": [{"type": "home","number": "111 111-1111"},{"type": "fax","number": "222 222-2222"}]}';
 
-	var json = JSON.parse(data);
-// var postpromise = ajax(posturl, "POST", menuItems);
 // postpromise.then(function(data){
 //      c.log(data);
 // });
@@ -159,7 +156,7 @@ $.ajax(posturl,{
 return {
       //doPost:doPost,
       getMenu:getMenu
-        }  
+        };
 })();
 
 // window.app2/*makes this function global*/ = (function (){
