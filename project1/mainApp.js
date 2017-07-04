@@ -7,45 +7,198 @@ var d = document;
     window.onload = function (){
         var menu = d.getElementById("menu");
         var cart=d.getElementById("cart");
+        var apps = d.getElementById("apps");
+        var salads = d.getElementById("salads");
+        var chicken = d.getElementById("chicken");
+        var burgers = d.getElementById("burgers");
+
+        var total=d.getElementById("total");
+        total.innerText="$0.00";
 
       Menu.getMenu(function (data) {
-            
+  
            for ( var i= 0;i<5;i++){
                var name = data["Appetizers["+i+"][name]"];
             var price = data["Appetizers["+i+"][price]"];
-                menu.appendChild(createLi(name, price));       
+                apps.appendChild(createMenuLi(name, price));
             };
+            for ( var i= 0;i<5;i++){
+             var name = data["Salads["+i+"][name]"];
+            var price = data["Salads["+i+"][price]"];
+                salads.appendChild(createMenuLi(name,price));
+            }
+            
+            for ( var i= 0;i<5;i++){
+             var name = data["Chicken["+i+"][name]"];
+            var price = data["Chicken["+i+"][price]"];
+                chicken.appendChild(createMenuLi(name, price));
+            }
+            for ( var i= 0;i<5;i++){
+             var name = data["Burgers["+i+"][name]"];
+            var price = data["Burgers["+i+"][price]"];
+                burgers.appendChild(createMenuLi(name,price));
+            }
+            
       });
 
+      
+                    //    cart.appendChild(createCartLi(name, price, quantity));
+
+        // Cart.getItem(function (data){
+           
+        //   c.log(data);
+        // //    var name = data["name"];
+        // //     var price = data["price"];
+        // //     var quantity = data["quantity"];
+
+    //   });
+    // }
+      
+
+    //   Cart.getCart(function (data){
+    //     for (var i = 0; i<data.length; i++){
+    //          var name = data[i]["name"];
+    //         var price = data[i]["price"];
+    //         var quantity = data[i]["quantity"];
+    //             cart.appendChild(createCartLi(name, price, quantity));
+    //     }
+    //   }
+
     
+    //   );
+     
     }
-function createLi(item, cost){
+function createMenuLi(item, cost){
+    var checkoutButton = d.getElementById("checkout");
     var food=d.createTextNode(item);
     var price=d.createTextNode(cost);
+    var price2 = d.createTextNode(price.nodeValue);
+    price2.nodeValue = "$"+price2.nodeValue;
+   var cart=d.getElementById("cart");
+    var message = d.getElementById("msg");
 
+
+    var amount = d.createElement("input");
+    amount.type = "number";
+    amount.value = 0;
+    amount.style = "width :2em;margin-left: 15px;";
+    amount.min = 0;
+    amount.max=20
      var li = d.createElement("li");
      li.className=" row list-group-item";
 
     var span = d.createElement("span");
     span.style = "float: right; padding-right: 15px;";
-    span.appendChild(price);
+    
+    span.appendChild(price2);
+    span.appendChild(amount);
 
     var addButton = d.createElement("button");
     addButton.innerText="Add to Cart";
-    addButton.className = "btn btn-default";
+    addButton.className = "btn btn-success";
     addButton.style="float: right;";
-    
+
     //event handling for checkbox of each newly added item
     addButton.addEventListener("click", function(){
-            Cart.addItemToCart(food,price);
-            
-    });
+        if (amount.value == 0){
+            alert("Enter amount");
+        }
+        else {
+           
+           if (Cart.inCart(food.nodeValue)){
+            alert("Item already in cart. If you want more than one, please update amount in Cart.");
+            amount.value=0;
 
+           }
+           else{
+            Cart.addItemToCart(food.nodeValue,price.nodeValue, amount.value);
+            cart.appendChild(createCartLi(food.nodeValue,price.nodeValue, amount.value ));
+            amount.value=0;
+           message.style.display = "none";
+        checkoutButton.disabled=false;
+
+           }
+          
+        
+        }  
+    });
      li.appendChild(food); //appends the text to li
      li.appendChild(addButton); //appends the delete button to li
      li.appendChild(span); //appends the text to li
+         
+
+   return li;
+}
+
+function createCartLi(item, cost, quantity){
+       var message = d.getElementById("msg");
+              var checkoutButton = d.getElementById("checkout");
+    var total=d.getElementById("total");
+    total.innerText="$"+Cart.getTotal();
+
+    var food=d.createTextNode(item);
+    var price=d.createTextNode(cost);
+    var price2=d.createTextNode(price.nodeValue);
+    price2.nodeValue = "$"+price2.nodeValue;
+    var amount = d.createElement("input");
+    amount.type = "number";
+    amount.value = quantity;
+    amount.style = "width :2em;margin-left: 15px;";
+    amount.min = 1;
+    amount.max=20
+
+  
+     var li = d.createElement("li");
+     li.className=" row list-group-item";
+
+    var span = d.createElement("span");
+    span.style = "float: right; padding-right: 15px;";
+    
+    span.appendChild(price2);
+    span.appendChild(amount);
+
+    var deleteButton = d.createElement("button");
+    deleteButton.innerText="Delete";
+    deleteButton.className = "btn btn-danger";
+    deleteButton.style="float: right;";
+ //event handling for checkbox of each newly added item
+    deleteButton.addEventListener("click", function(event){
+        
+       Cart.removeItem(event, food.nodeValue);
+        total.innerText="$"+Cart.getTotal();
+        if (Cart.isEmpty())
+        {
+           message.style.display = "block";
+           checkoutButton.disabled=true;
+        }
+
+    });
+
+    var updateButton = d.createElement("button");
+    updateButton.innerText="Update";
+    updateButton.className = "btn btn-default";
+    updateButton.style="float: right; margin-right: 15px;";
+
+ //event handling for checkbox of each newly added item
+    updateButton.addEventListener("click", function(event){
+       Cart.updateItem(food.nodeValue, amount.value);
+       updateButton.className="btn btn-default";
+        total.innerText="$"+Cart.getTotal();
+            
+    });
+
+      amount.addEventListener("change", function (){
+        updateButton.className="btn btn-success";
+    })
+   
+     li.appendChild(food); //appends the text to li
+     li.appendChild(deleteButton); //appends the delete button to li
+    li.appendChild(updateButton); //appends the delete button to li
+     li.appendChild(span); //appends the text to li
+         
+
    return li;
 }
 
 
- })(window.cart ||window.menu/*making sure this function is aware of it*/ || (window.menu = {})); //IIFE fu n
+ })( window.menu, window.cart/*making sure this function is aware of it*/ || ({},  jQuery)); //IIFE fu n
