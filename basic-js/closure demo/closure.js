@@ -2,14 +2,14 @@
 
 var c = console;
 
-    var count=0;
     function outer(){
+            var count=0;
         return {
             addToCount:function(i){count +=i;},
             getCount:function () {return count;}
         };
     
-}
+    }
 
 //execute outer and return an "inner" object
 var counter=outer();
