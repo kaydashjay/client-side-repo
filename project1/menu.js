@@ -13,7 +13,7 @@ var Geturl = "https://reqres.in/api/users";
     
   
 //var xhr = new XMLHttpRequest();
-function ajax(url, method, data) {
+function ajax(url, method, data, callback) {
   return new Promise(function(resolve, reject) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'text';
@@ -34,16 +34,7 @@ function ajax(url, method, data) {
   });
 }
 var getMenu = function (callback){
-var Items = {"Appetizers":{
-     "title": "foo",
-    "body": "bar",
-    "userId": 3
-}
-};
 
-// postpromise.then(function(data){
-//      c.log(data);
-// });
 var menuItems = {
     "Appetizers":[
         {"name": "Boneless Wings",
@@ -102,7 +93,12 @@ var menuItems = {
 //     xhr.onerror = () => reject(xhr.statusText);
 // xhr.send(menuItems);
 // })
-
+// var promise = ajax(posturl, "POST", menuItems,callback);
+//  promise.then(function (data)
+//  {
+//    c.log(data);
+//    callback(data);
+//  });
 
 
 $.ajax(posturl,{
@@ -158,41 +154,3 @@ return {
       getMenu:getMenu
         };
 })();
-
-// window.app2/*makes this function global*/ = (function (){
-//     var privateVar = "I'm a private variable";
-//     function doPost(callback){
-//         var url = "http://jsonplaceholder.typicode.com/posts";
-        
-//         var xhr = new  XMLHttpRequest();
-
-//         xhr.onreadystatechange = function (){
-//             if (xhr.readyState==4)
-//             {
-//                 if (xhr.status==201)
-//                 {
-//                     var data = xhr.responseText;
-//                     callback(data);
-//                     //c.log(data);
-//                 }
-//             }
-
-//         };
-    
-
-//     var dataToSend = {
-//          name:"fred", 
-//          title:"resident", 
-//          title:"trouble maker", 
-//          userID:1
-//         };
-        
-//     xhr.open ("POST", url, true)
-//     xhr.send(dataToSend);
-//     }
-//     return {
-//         doPost:doPost,
-//         publicVar: privateVar
-//     }
-    
-// })();
