@@ -20,42 +20,42 @@ var d = document;
       Menu.getMenu(function (data) {
   
            for ( var i= 0;i<5;i++){
-               var name = data["Appetizers["+i+"][name]"];
-            var price = data["Appetizers["+i+"][price]"];
+                var name = data["Appetizers["+i+"][name]"];
+                var price = data["Appetizers["+i+"][price]"];
                 apps.appendChild(createMenuLi(name, price));
-            };
+            }
             for ( var i= 0;i<5;i++){
-             var name = data["Salads["+i+"][name]"];
-            var price = data["Salads["+i+"][price]"];
+                var name = data["Salads["+i+"][name]"];
+                var price = data["Salads["+i+"][price]"];
                 salads.appendChild(createMenuLi(name,price));
             }
             
             for ( var i= 0;i<5;i++){
-             var name = data["Chicken["+i+"][name]"];
-            var price = data["Chicken["+i+"][price]"];
+                var name = data["Chicken["+i+"][name]"];
+                var price = data["Chicken["+i+"][price]"];
                 chicken.appendChild(createMenuLi(name, price));
             }
             for ( var i= 0;i<5;i++){
-             var name = data["Burgers["+i+"][name]"];
-            var price = data["Burgers["+i+"][price]"];
+                var name = data["Burgers["+i+"][name]"];
+                var price = data["Burgers["+i+"][price]"];
                 burgers.appendChild(createMenuLi(name,price));
-            }
-            
+            }  
       });
 
     Cart.getCart(function (list){
-        
+
       });
-   
+   //gets user information from user.js
     User.getUser(function (data){
         var userText = "Welcome "+ data.fname+"! Here is your cart!<br> You shipping address is: <br>"+data["address[streetAddress]"]+"<br>"+data["address[city]"]+", "+data["address[state]"]+" "+data["address[zipcode]"];
         userinfo.innerHTML=userText;
     });
     
-
-   
 function createMenuLi(item, cost){
-    var food=d.createTextNode(item);
+     var li = d.createElement("li");
+     li.style = " background-color: #B56357;";
+     li.className=" row list-group-item";
+     var food=d.createTextNode(item);
     var price=d.createTextNode(cost);
     var price2 = d.createTextNode(price.nodeValue);
     price2.nodeValue = "$"+price2.nodeValue;//adds the $ sign while keeping the original price value as a number
@@ -68,8 +68,8 @@ function createMenuLi(item, cost){
     amount.style = "width :2em;margin-left: 15px;";
     amount.min = 0;
     amount.max=20
-     var li = d.createElement("li");
-     li.className=" row list-group-item";
+
+    
 
 //creat a span element to hold the priceNode and the amount element for the quantity
     var span = d.createElement("span");
@@ -97,33 +97,22 @@ function createMenuLi(item, cost){
            else{
 //add item to cart array
             Cart.addItem(food.nodeValue,price.nodeValue, amount.value);
-                    cart.appendChild(createCartLi(food.nodeValue));
-                
-            
-            //Cart.updateCart(cart, li);
-            //c.log(Cart.getItem(food.nodeValue));
-           // Cart.updateCart();
-           
-           //displays item in cart
-            //cart.appendChild(createCartLi(food.nodeValue));
+        
+            cart.appendChild(createCartLi(food.nodeValue));
             amount.value=0;
-           message.style.display = "none";
+            message.style.display = "none";
             checkoutButton.disabled=false;
            }
-          
-        
         }  
     });
      li.appendChild(food); //appends the food text to li
      li.appendChild(addButton); //appends the addButton to li
      li.appendChild(span); //appends the span of price and quantity to li
          
-
    return li;
 }
 
 function createCartLi(item){
-
     var listItem = Cart.getItem (item);//get's the item with its keys and values
     var message = d.getElementById("msg"); //"Cart is empty" message
     var checkoutButton = d.getElementById("checkout");
@@ -140,7 +129,7 @@ function createCartLi(item){
     amount.value = listItem.quantity;
     amount.style = "width :2em;margin-left: 15px;";
     amount.min = 1;
-    amount.max=20
+    amount.max=20;
 
     //creates the actual list item element
      var li = d.createElement("li");
@@ -161,15 +150,13 @@ function createCartLi(item){
 
  //event handling for deletebutton of each newly added item
     deleteButton.addEventListener("click", function(event){
-        
-       Cart.removeItem(event, food.nodeValue); //deletes item from cart array
+       Cart.removeItem(food.nodeValue); //deletes item from cart array
+        event.currentTarget.parentElement.remove(); //removes from display
         total.innerText="$"+Cart.getTotal();//update the displayed total
-        if (Cart.isEmpty())
-        {
+        if (Cart.isEmpty()){
            message.style.display = "block";//display message if caret empty
            checkoutButton.disabled=true; 
         }
-
     });
 
 //creates update button and styles it
@@ -192,10 +179,9 @@ function createCartLi(item){
    
      li.appendChild(food); //appends the food name to li
      li.appendChild(deleteButton); //appends the delete Button to li
-    li.appendChild(updateButton); //appends the updateButton to li
+     li.appendChild(updateButton); //appends the updateButton to li
      li.appendChild(span); //appends the span of price ans quantity of each item to li
          
-
    return li;
 }
     };

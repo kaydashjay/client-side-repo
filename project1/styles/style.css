@@ -1,0 +1,23 @@
+#menu {
+    height:100%; 
+    overflow-y: auto;
+}
+
+#totalDiv{
+    border-top: 3px solid black;
+}
+#totalPTag{
+    font-size: 12pt;
+     display: inline-block;
+}
+
+/*body{
+    background-color: #B56357;
+}
+
+.well {
+ background: #EAE3EA;  
+}
+.jumbotron{
+    background: #B4DBC0;
+}*/

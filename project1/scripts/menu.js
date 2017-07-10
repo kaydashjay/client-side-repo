@@ -13,14 +13,15 @@ var Geturl = "https://reqres.in/api/users";
     
   
 //var xhr = new XMLHttpRequest();
-function ajax(url, method, data, callback) {
+function ajax(url, method, data) {
   return new Promise(function(resolve, reject) {
     var xhr = new XMLHttpRequest();
+    xhr.open(method, url, true);
     xhr.responseType = 'text';
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4) {
         if (xhr.status === 200 ||xhr.status === 201 ) {
-          resolve(xhr.responseText);
+          resolve(JSON.parse(xhr.responseText));
         } else {
           reject(Error(xhr.status + " " +xhr.statusText));
         }
@@ -29,8 +30,8 @@ function ajax(url, method, data, callback) {
     xhr.onerror = function() {
       reject(Error("Network Error"));
     };
-    xhr.open(method, url, true);
-    xhr.send(data);
+    
+    xhr.send(JSON.stringify(data));
   });
 }
 var getMenu = function (callback){
@@ -86,14 +87,9 @@ var menuItems = {
     ]
 };
 
-// var promise = new Promise((resolve, reject) => {
-// xhr.open("POST", posturl, true);
-// // xhr.setRequestHeader("Content-type", "application/json");
-//  xhr.onload = () => resolve(xhr.responseText);
-//     xhr.onerror = () => reject(xhr.statusText);
-// xhr.send(menuItems);
-// })
-// var promise = ajax(posturl, "POST", menuItems,callback);
+
+
+// var promise = ajax(posturl, "POST", menuItems);
 //  promise.then(function (data)
 //  {
 //    c.log(data);
@@ -108,49 +104,10 @@ $.ajax(posturl,{
     callback(data);
 });
 
-// });
-
 };
 
-// var getMenu = function(callback){
-//     // var promise = ajax(geturl, "GET",null );
-//     // promise.then(function (data){
-//     //     callback(JSON.parse(data));
-//     // })
-//     $.ajax(posturl,{
-//     method: "POST",
-// }).then(function(data){
-//     callback(data);
-// });
-// xhr.onreadystatechange = function(){
-//     if (xhr.readyState == 4){
-//         c.log("load");
-//         if (xhr.status == 200){
-//             //var data = JSON.parse(xhr.responseText);
-//             c.log("Loaded");
-//             promise.then(function(data){
-//      callback (data);
-//             });
-//         }
-//     }
-// };
-// var promise = new Promise((res, rej) => {
-// xhr.open("GET", geturl, true);
-// xhr.onload = () => res(JSON.parse(xhr.responseText));
-// xhr.onerror = () => rej(xhr.statusText);
-// xhr.send();
-// });
-// }).then(function(data){
-//      callback (data);//c.log(data);
-// });
-// $.ajax("http://jsonplaceholder.typicode.com/posts/1",{
-//     method: "GET"
-// }).then(function(data){
-//     c.log(data);
-// });
-// }
+
 return {
-      //doPost:doPost,
       getMenu:getMenu
         };
 })();
