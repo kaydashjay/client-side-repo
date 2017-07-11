@@ -53,7 +53,7 @@ var d = document;
     
 function createMenuLi(item, cost){
      var li = d.createElement("li");
-     li.style = " background-color: #B56357;";
+     li.style = "font-family: 'Anton', sans-serif;color: #EDF5E1; background-color: #05386B;";
      li.className=" row list-group-item";
      var food=d.createTextNode(item);
     var price=d.createTextNode(cost);
@@ -65,11 +65,9 @@ function createMenuLi(item, cost){
     var amount = d.createElement("input");
     amount.type = "number";
     amount.value = 0;
-    amount.style = "width :2em;margin-left: 15px;";
+    amount.style = "width :2em;margin-left: 15px; color: #343434;";
     amount.min = 0;
     amount.max=20
-
-    
 
 //creat a span element to hold the priceNode and the amount element for the quantity
     var span = d.createElement("span");
@@ -81,7 +79,7 @@ function createMenuLi(item, cost){
     var addButton = d.createElement("button");
     addButton.innerText="Add to Cart";
     addButton.className = "btn btn-success";
-    addButton.style="float: right;";
+    addButton.style="float: right;background-color: #379683;";
 
     //event handling for add button of each newly added item
     addButton.addEventListener("click", function(){
@@ -113,7 +111,10 @@ function createMenuLi(item, cost){
 }
 
 function createCartLi(item){
-    var listItem = Cart.getItem (item);//get's the item with its keys and values
+    var li = d.createElement("li");
+     li.className=" row list-group-item";
+    li.style = "font-family: 'Anton', sans-serif;color: #EDF5E1; background-color: #05386B;";
+var listItem = Cart.getItem (item);//get's the item with its keys and values
     var message = d.getElementById("msg"); //"Cart is empty" message
     var checkoutButton = d.getElementById("checkout");
     total.innerText="$"+Cart.getTotal(); //display the updated total when item added to cart
@@ -127,13 +128,12 @@ function createCartLi(item){
     var amount = d.createElement("input");
     amount.type = "number";
     amount.value = listItem.quantity;
-    amount.style = "width :2em;margin-left: 15px;";
+    amount.style = "width :2em;margin-left: 15px; color: #343434;";
     amount.min = 1;
     amount.max=20;
 
     //creates the actual list item element
-     var li = d.createElement("li");
-     li.className=" row list-group-item";
+     
 
      // creates span tag to hold the  price node and the amount input element
     var span = d.createElement("span");
@@ -146,13 +146,19 @@ function createCartLi(item){
     var deleteButton = d.createElement("button");
     deleteButton.innerText="Delete";
     deleteButton.className = "btn btn-danger";
-    deleteButton.style="float: right;";//right alignment
+    deleteButton.style="float: right; background-color: #E27D60;";//right alignment
 
  //event handling for deletebutton of each newly added item
     deleteButton.addEventListener("click", function(event){
-       Cart.removeItem(food.nodeValue); //deletes item from cart array
+        if (confirm("Click OK if you are sure you want to delete "+ food.nodeValue + "?")){
+            Cart.removeItem(food.nodeValue); //deletes item from cart array
         event.currentTarget.parentElement.remove(); //removes from display
-        total.innerText="$"+Cart.getTotal();//update the displayed total
+        total.innerText="$"+Cart.getTotal();//update the displayed total 
+        }
+        else{
+           ;
+        }
+       
         if (Cart.isEmpty()){
            message.style.display = "block";//display message if caret empty
            checkoutButton.disabled=true; 
