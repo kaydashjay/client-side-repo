@@ -47,7 +47,7 @@ var d = document;
       });
    //gets user information from user.js
     User.getUser(function (data){
-        var userText = "Welcome "+ data.fname+"! Here is your cart!<br> You shipping address is: <br>"+data["address[streetAddress]"]+"<br>"+data["address[city]"]+", "+data["address[state]"]+" "+data["address[zipcode]"];
+        var userText = "Welcome "+ data.fname+"! Here is your cart!<br> Your shipping address is: <br>"+data["address[streetAddress]"]+"<br>"+data["address[city]"]+", "+data["address[state]"]+" "+data["address[zipcode]"];
         userinfo.innerHTML=userText;
     });
     
