@@ -16,7 +16,7 @@ body{
     font-family: 'Anton', sans-serif;
     padding-left: 1.2%;
     padding-right: 1.2%;
-    
+   font-family: 'Anton', sans-serif; 
 }
 
 #title{
@@ -27,18 +27,18 @@ body{
 #Appetizers, #Chickens, #Burger, #Salad, #menus{
     color: #05386B;
     font-size: 20px;
-    font-family: 'Anton', sans-serif;
+    /*font-family: 'Anton', sans-serif;*/
 }
 
 #total, #totalPTag, #userinfo, #msg{
     color: #05386B;
     font-size: 16px;
-    font-family: 'Anton', sans-serif;
+    /*font-family: 'Anton', sans-serif;*/
 }
 #carts, #menus{
     color: #05386B;
     font-size: 25px;
-    font-family: 'Anton', sans-serif;
+    /*font-family: 'Anton', sans-serif;*/
 }
 
 #checkout{
