@@ -15,29 +15,31 @@ var d = document;
         var burgers = d.getElementById("burgers");
 
         var total=d.getElementById("total");
-        total.innerText="$0.00";
+        total.innerText="$0.00"; //set initial value of total
 
       Menu.getMenu(function (data) {
-  
+        //show appetizers
            for ( var i= 0;i<5;i++){
-                var name = data["Appetizers["+i+"][name]"];
-                var price = data["Appetizers["+i+"][price]"];
+                var name = data.Appetizers[i].name;
+                var price = data.Appetizers[i].price;
                 apps.appendChild(createMenuLi(name, price));
             }
-            for ( var i= 0;i<5;i++){
-                var name = data["Salads["+i+"][name]"];
-                var price = data["Salads["+i+"][price]"];
+            //show salads
+            for ( var i= 0;i<data.Salads.length;i++){
+                var name = data.Salads[i].name;
+                var price = data.Salads[i].price;
                 salads.appendChild(createMenuLi(name,price));
             }
-            
-            for ( var i= 0;i<5;i++){
-                var name = data["Chicken["+i+"][name]"];
-                var price = data["Chicken["+i+"][price]"];
+            //show chicken dishes
+            for ( var i= 0;i<data.Chicken.length;i++){
+                var name = data.Chicken[i].name;
+                var price = data.Chicken[i].price;
                 chicken.appendChild(createMenuLi(name, price));
             }
-            for ( var i= 0;i<5;i++){
-                var name = data["Burgers["+i+"][name]"];
-                var price = data["Burgers["+i+"][price]"];
+            //show burgers
+            for ( var i= 0;i<data.Burgers.length;i++){
+                var name = data.Burgers[i].name;
+                var price = data.Burgers[i].price;
                 burgers.appendChild(createMenuLi(name,price));
             }  
       });
@@ -47,7 +49,8 @@ var d = document;
         var userText = "Welcome "+ data.fname+"! Here is your cart!<br> Your shipping address is: <br>"+data["address[streetAddress]"]+"<br>"+data["address[city]"]+", "+data["address[state]"]+" "+data["address[zipcode]"];
         userinfo.innerHTML=userText;
     });
-    
+
+    //creates menu items and all of its components and event handling
 function createMenuLi(item, cost){
     var li = d.createElement("li");
     li.style = "font-family: 'Anton', sans-serif;color: #EDF5E1; background-color: #05386B;";
@@ -78,9 +81,9 @@ function createMenuLi(item, cost){
     addButton.className = "btn btn-success";
     addButton.style="float: right;background-color: #379683;";
     
-     li.appendChild(food); //appends the food text to li
-     li.appendChild(addButton); //appends the addButton to li
-     li.appendChild(span); //appends the span of price and quantity to li
+    li.appendChild(food); //appends the food text to li
+    li.appendChild(addButton); //appends the addButton to li
+    li.appendChild(span); //appends the span of price and quantity to li
 
      //handles click event when a list item is clicked
     li.addEventListener("click", function(event){

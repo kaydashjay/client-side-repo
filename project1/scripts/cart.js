@@ -38,17 +38,16 @@ window.cart = (function(){
 //adds item to cart array
     function addItem(item, price, amount){
     var Item={}; //creats item object
-      Item={"name": null,"price": null, "quantity": null}; //creates null object for each item
-      Item["name"]=item;
-      Item["price"]=Number.parseFloat(price);
-      Item["quantity"]=Number.parseInt(amount);
+    Item={"name": null,"price": null, "quantity": null}; //creates null object for each item
+    Item["name"]=item;
+    Item["price"]=Number.parseFloat(price);
+    Item["quantity"]=Number.parseInt(amount);
 
     cart.push(Item);//pushes object in cart array
     };
 
 //returns cart array
     function getCart (callback){
-        
         return callback(cart);
     };
 
@@ -73,14 +72,14 @@ window.cart = (function(){
         }
     }
 
-    function updateCart(callback){
-       var promise = ajax(posturl, "POST", cart);
- promise.then(function (data)
- {
-   c.log(data);
-   callback(data);
- });
-    };
+//     function updateCart(callback){
+//        var promise = ajax(posturl, "POST", cart);
+//  promise.then(function (data)
+//  {
+//    c.log(data);
+//    callback(data);
+//  });
+//     };
 
     //returns the total
     function getTotal(){
@@ -96,7 +95,7 @@ window.cart = (function(){
         getCart:getCart,
         removeItem:removeItem,
         getItem:getItem, 
-        loadCart:loadCart,
+        //loadCart:loadCart,
         updateItem:updateItem,
         inCart:inCart,
         getTotal:getTotal,
