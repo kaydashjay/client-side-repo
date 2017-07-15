@@ -13,13 +13,16 @@ var d = document;
         var salads = d.getElementById("salads");
         var chicken = d.getElementById("chicken");
         var burgers = d.getElementById("burgers");
+        var checkoutButton = d.getElementById("checkout");
+        var message = d.getElementById("msg"); //"Cart is empty" message
 
         var total=d.getElementById("total");
         total.innerText="$0.00"; //set initial value of total
 
+//grabs the menu from json file
       Menu.getMenu(function (data) {
         //show appetizers
-           for ( var i= 0;i<5;i++){
+           for ( var i= 0;i<data.Appetizers.length;i++){
                 var name = data.Appetizers[i].name;
                 var price = data.Appetizers[i].price;
                 apps.appendChild(createMenuLi(name, price));
@@ -49,99 +52,65 @@ var d = document;
         var userText = "Welcome "+ data.fname+"! Here is your cart!<br> Your shipping address is: <br>"+data["address[streetAddress]"]+"<br>"+data["address[city]"]+", "+data["address[state]"]+" "+data["address[zipcode]"];
         userinfo.innerHTML=userText;
     });
-
-    //creates menu items and all of its components and event handling
-function createMenuLi(item, cost){
-    var li = d.createElement("li");
+    
+//creates the list items
+function CreateLi (item, cost){
+    var li = d.createElement("li");//creates the actual list item element
     li.style = "font-family: 'Anton', sans-serif;color: #EDF5E1; background-color: #05386B;";
     li.className=" row list-group-item";
     var food=d.createTextNode(item);
-    var price=d.createTextNode(cost);
-    var price2 = d.createTextNode(price.nodeValue);
-    price2.nodeValue = "$"+price2.nodeValue;//adds the $ sign while keeping the original price value as a number
-    var message = d.getElementById("msg");
-
-//creates amount input element for the quantity
+    var price = d.createTextNode(cost);
+ 
+//creates amount input element for the quantity    
     var amount = d.createElement("input");
     amount.type = "number";
-    amount.value = 0;
     amount.style = "width :2em;margin-left: 15px; color: #343434;";
     amount.min = 0;
-    amount.max=20
+    amount.max=20;
 
-//creat a span element to hold the priceNode and the amount element for the quantity
-    var span = d.createElement("span");
+//creat a span element to hold the priceNode and the amount element for the quantity    
+var span = d.createElement("span");
     span.style = "float: right; padding-right: 15px;";// right alingment and spacing from the addButton
-    span.appendChild(price2);
+    span.appendChild(price);
     span.appendChild(amount);
 
-//creat addButton with its styling
-    var addButton = d.createElement("button");
-    addButton.innerText="Add to Cart";
-    addButton.className = "btn btn-success";
-    addButton.style="float: right;background-color: #379683;";
-    
+//create addButton with its styling
+    var Button = d.createElement("button");
+    Button.className = "btn";
+    Button.style="float: right;background-color: #379683;";
+
     li.appendChild(food); //appends the food text to li
-    li.appendChild(addButton); //appends the addButton to li
+    li.appendChild(Button); //appends the addButton to li
     li.appendChild(span); //appends the span of price and quantity to li
 
-     //handles click event when a list item is clicked
-    li.addEventListener("click", function(event){
-        //event handling for add button of each newly added item
-        if (event.target.innerText == "Add to Cart"){
-            if (amount.value == 0){
-            alert("Enter amount");
-        }
-        else {
-           if (Cart.inCart(food.nodeValue)){
-                alert("Item already in cart. If you want more than one, please update amount in Cart.");
-                amount.value=0;
-                }    
-           else{
-            //add item to cart array
-                Cart.addItem(food.nodeValue,price.nodeValue, amount.value);
-                cart.appendChild(createCartLi(food.nodeValue));
-                amount.value=0;
-                message.style.display = "none";
-                checkoutButton.disabled=false;
-                }
-        }  
-        }  
-        });
-   return li;
+    return li;
 }
 
+//creates menu items and all of its components and event handling
+function createMenuLi(item, cost){
+    var li = CreateLi(item,cost);
+    var amount = li.childNodes[2].childNodes[1];
+    var food = li.childNodes[0].nodeValue;
+    var price = li.childNodes[2].childNodes[0].nodeValue;
+    amount.value = 0;
+   var addButton = li.childNodes[1];
+    addButton.innerText="Add to Cart";
+    li.childNodes[2].childNodes[0].nodeValue = "$"+price; //adds the $ sign while keeping the original price value as a number
+ 
+   return li;
+}
+//creats cart list items
 function createCartLi(item){
-    var li = d.createElement("li"); //creates the actual list item element
-    li.className=" row list-group-item";
-    li.style = "font-family: 'Anton', sans-serif;color: #EDF5E1; background-color: #05386B;";
     var listItem = Cart.getItem (item);//get's the item with its keys and values
-    var message = d.getElementById("msg"); //"Cart is empty" message
-    var checkoutButton = d.getElementById("checkout");
+    var li = CreateLi(listItem.name, listItem.price);//creats the list item
     total.innerText="$"+Cart.getTotal(); //display the updated total when item added to cart
-
-    var food=d.createTextNode(listItem.name);
-    var price=d.createTextNode(listItem.price);
-    var price2=d.createTextNode(price.nodeValue);
-    price2.nodeValue = "$"+price2.nodeValue; //adds the $ sign while keeping the original price value as a number
-
-    //creates input element for the quantity
-    var amount = d.createElement("input");
-    amount.type = "number";
+    var amount = li.childNodes[2].childNodes[1]//grabs amount input element    
     amount.value = listItem.quantity;
-    amount.style = "width :2em;margin-left: 15px; color: #343434;";
     amount.min = 1;
-    amount.max=20;
-    
-     // creates span tag to hold the  price node and the amount input element
-    var span = d.createElement("span");
-    span.style = "float: right; padding-right: 15px;";
-    span.appendChild(price2);
-    span.appendChild(amount);
 
-    //creates the deleteButton that deletes the item from the cart
+    //grabs the deleteButton that deletes the item from the cart
     //assigns styling
-    var deleteButton = d.createElement("button");
+    var deleteButton = li.childNodes[1];
     deleteButton.innerText="Delete";
     deleteButton.className = "btn btn-danger";
     deleteButton.style="float: right; background-color: #E27D60;";//right alignment
@@ -151,15 +120,18 @@ function createCartLi(item){
     updateButton.innerText="Update";
     updateButton.className = "btn btn-default";
     updateButton.style="float: right; margin-right: 15px;";
+
+    //inserts the update button in the list item
+     li.insertBefore(updateButton, li.childNodes[2]); //appends the updateButton to li
    
-     li.appendChild(food); //appends the food name to li
-     li.appendChild(deleteButton); //appends the delete Button to li
-     li.appendChild(updateButton); //appends the updateButton to li
-     li.appendChild(span); //appends the span of price ans quantity of each item to li
-    
-//handles event for when the entire list item is clicked
-    li.addEventListener("click", function (event){
+   return li;
+;}
+
+//CART EVENT HANDLING
+//handles event for when the entire cart is clicked
+    cart.addEventListener("click", function (event){
 //event handling for delete button of each newly added item
+            var food =event.target.parentNode.childNodes[0];
         if (event.target.innerText == "Delete"){
             if (confirm("Click OK if you are sure you want to delete "+ food.nodeValue + "?")){
                 Cart.removeItem(food.nodeValue); //deletes item from cart array
@@ -173,17 +145,48 @@ function createCartLi(item){
     }
      //event handling for update button of each newly added item
     if (event.target.innerText == "Update"){
+        var amount = event.target.parentNode.childNodes[3].childNodes[1];
         Cart.updateItem(food.nodeValue, amount.value); //updates cart array
+        var updateButton = event.target.parentNode.childNodes[2];
         updateButton.className="btn btn-default"; 
         total.innerText="$"+Cart.getTotal(); //update displayed total
     }
 });
+
 //event handling for when the quantity changes of each newly added item
- li.addEventListener("change", function (event){
+ cart.addEventListener("change", function (event){
+       var updateButton = event.target.parentNode.parentNode.childNodes[2];
         updateButton.className="btn btn-success"; //changes color when you change the quantity
-    })
-   return li;
-;}
+    });
+
+//MENU EVENT HANDLING
+ //for click
+    menu.addEventListener("click", function(event){
+        //event handling for add button of each newly added item
+        if (event.target.innerText == "Add to Cart"){
+        var amount = event.target.parentNode.childNodes[2].childNodes[1];
+         var food =event.target.parentNode.childNodes[0];
+         var price = event.target.parentNode.childNodes[2].childNodes[0];
+        price=price.nodeValue.replace("$","");
+            if (amount.value == 0){
+            alert("Enter amount");
+        }
+        else {
+           if (Cart.inCart(food.nodeValue)){
+                alert("Item already in cart. If you want more than one, please update amount in Cart.");
+                amount.value=0;
+                }    
+           else{
+            //add item to cart array
+                Cart.addItem(food.nodeValue,price, amount.value);
+                cart.appendChild(createCartLi(food.nodeValue));
+                amount.value=0;
+                message.style.display = "none";
+                checkoutButton.disabled=false;
+                }
+        }  
+        }
+    });
     };
 
  })( window.User, window.menu, window.cart /*making sure this function is aware of it*/ || ({})); //IIFE fu n
