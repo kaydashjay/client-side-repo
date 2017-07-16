@@ -19,6 +19,14 @@ var d = document;
         var total=d.getElementById("total");
         total.innerText="$0.00"; //set initial value of total
 
+function getDOMcartItem(name){
+    for (var i = 3; i<cart.childNodes.length; i++){
+        if (cart.childNodes[i].firstChild.nodeValue==name){
+            return cart.childNodes[i];
+        } 
+    }
+   c.log("Cant find " +name+ " in cart DOM");    
+}
 //grabs the menu from json file
       Menu.getMenu(function (data) {
         //show appetizers
@@ -135,7 +143,7 @@ function createCartLi(item){
         if (event.target.innerText == "Delete"){
             if (confirm("Click OK if you are sure you want to delete "+ food.nodeValue + "?")){
                 Cart.removeItem(food.nodeValue); //deletes item from cart array
-                event.currentTarget.remove(); //removes from display
+                event.target.parentNode.remove(); //removes from display
                 total.innerText="$"+Cart.getTotal();//update the displayed total 
             }
         if (Cart.isEmpty()){
@@ -173,7 +181,12 @@ function createCartLi(item){
         }
         else {
            if (Cart.inCart(food.nodeValue)){
-                alert("Item already in cart. If you want more than one, please update amount in Cart.");
+            Cart.addItem(food.nodeValue,price, amount.value);
+            var cartItem = getDOMcartItem(food.nodeValue);
+            var cartQ = Number.parseInt(cartItem.childNodes[3].childNodes[1].value);
+             var quantity= Number.parseInt(amount.value);
+             cartItem.childNodes[3].childNodes[1].value=quantity + cartQ;
+                 total.innerText="$"+Cart.getTotal(); //display the updated total when item added to cart
                 amount.value=0;
                 }    
            else{
@@ -183,7 +196,7 @@ function createCartLi(item){
                 amount.value=0;
                 message.style.display = "none";
                 checkoutButton.disabled=false;
-                }
+               }
         }  
         }
     });
