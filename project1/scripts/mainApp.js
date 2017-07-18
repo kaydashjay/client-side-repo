@@ -19,13 +19,22 @@ var d = document;
         var total=d.getElementById("total");
         total.innerText="$0.00"; //set initial value of total
 
+function inDOMcart(name){
+    for (var i = 3; i<cart.childNodes.length; i++){
+        if (cart.childNodes[i].firstChild.nodeValue==name){
+            return true;
+        } 
+    }
+    return false 
+}
 function getDOMcartItem(name){
     for (var i = 3; i<cart.childNodes.length; i++){
         if (cart.childNodes[i].firstChild.nodeValue==name){
             return cart.childNodes[i];
         } 
     }
-   c.log("Cant find " +name+ " in cart DOM");    
+   c.log("Cant find " +name+ " in cart DOM");  
+      
 }
 //grabs the menu from json file
       Menu.getMenu(function (data) {
@@ -180,24 +189,29 @@ function createCartLi(item){
             alert("Enter amount");
         }
         else {
-           if (Cart.inCart(food.nodeValue)){
-            Cart.addItem(food.nodeValue,price, amount.value);
-            var cartItem = getDOMcartItem(food.nodeValue);
-            var cartQ = Number.parseInt(cartItem.childNodes[3].childNodes[1].value);
-             var quantity= Number.parseInt(amount.value);
-             cartItem.childNodes[3].childNodes[1].value=quantity + cartQ;
-                 total.innerText="$"+Cart.getTotal(); //display the updated total when item added to cart
-                amount.value=0;
-                }    
-           else{
             //add item to cart array
                 Cart.addItem(food.nodeValue,price, amount.value);
-                cart.appendChild(createCartLi(food.nodeValue));
+                Cart.getCart( function (data){
+                    //go through cart array and add to DOM
+                    data.forEach(function(item,i) {
+                        //if item already in DOM and the quantity in DOM and cart are different, make DOM = cart quantity
+                        if (inDOMcart(item["name"])){
+                           var li = getDOMcartItem(item["name"]);
+                           if (Number.parseInt(li.childNodes[3].childNodes[1].value)!=item["quantity"]){
+                               li.childNodes[3].childNodes[1].value =item["quantity"]
+                           }
+                        }
+                        else{
+                        cart.appendChild(createCartLi(item["name"]));//append the new items that aren't in the cart array
+                        }
+                    }, this);
+                });
+             total.innerText="$"+Cart.getTotal(); //display the updated total when item added to cart
                 amount.value=0;
                 message.style.display = "none";
                 checkoutButton.disabled=false;
-               }
-        }  
+             
+            }
         }
     });
     };

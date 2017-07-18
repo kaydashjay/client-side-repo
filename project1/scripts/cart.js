@@ -39,9 +39,10 @@ window.cart = (function(){
     function addItem(item, price, amount){
         if (inCart(item)){
             var li = getItem(item);
-            li["quantity"] = Number.parseInt(li["quantity"]);
+            var q = Number.parseInt(li["quantity"]);
             amount = Number.parseInt(amount);
-             li["quantity"]+=amount;
+             q+=amount;
+             updateItem(item, q);
         }
         else{
     var Item={}; //creats item object
@@ -51,6 +52,7 @@ window.cart = (function(){
     Item["quantity"]=Number.parseInt(amount);
 
     cart.push(Item);//pushes object in cart array
+ 
         }
     
     };
